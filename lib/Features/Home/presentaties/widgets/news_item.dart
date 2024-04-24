@@ -4,6 +4,7 @@ import 'package:khalesi/Core/const/const_Color.dart';
 
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Core/utils/loading.dart';
+import 'package:khalesi/Features/Home/presentaties/click_page.dart';
 
 class NewsItem extends StatelessWidget {
   final String path;
@@ -21,13 +22,13 @@ class NewsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Get.to(
-        //     MainPage(
-        //       isArtMode: false,
-        //       id: id,
-        //     ),
-        //     arguments: false,
-        //     transition: Transition.leftToRight);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClickPage(
+                id: id,
+              ),
+            ));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

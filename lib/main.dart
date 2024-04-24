@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khalesi/Config/app-routes.dart';
 import 'package:khalesi/Core/gen/fonts.gen.dart';
+import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/cubit/content_cubit.dart';
+import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/indicator/indicator_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/navbar/nav_bar_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart';
@@ -27,6 +29,18 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SliderCubit(),
         ),
+        BlocProvider(
+          create: (context) => HomeMainCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ContentCubit(),
+        ),
+        // BlocProvider(
+        //   create: (context) => SubjectBloc(),
+        // ),
+        // BlocProvider(
+        //   create: (context) => SubjectBloc(),
+        // ),
         // BlocProvider(
         //   create: (context) => SubjectBloc(),
         // ),

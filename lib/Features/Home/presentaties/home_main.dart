@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dio/dio.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -10,10 +10,13 @@ import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/const/const_link.dart';
 import 'package:khalesi/Core/extensions/layout_ex.dart';
 import 'package:khalesi/Core/extensions/variyable_ex.dart';
-import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Core/utils/loading.dart';
+import 'package:khalesi/Core/widgets/appbar.dart';
+import 'package:khalesi/Core/widgets/drawer.dart';
 import 'package:khalesi/Features/Home/data/model/model_all.dart';
+import 'package:khalesi/Features/Home/data/source/fetchData.dart';
+import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/indicator/indicator_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/navbar/nav_bar_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart';
@@ -21,6 +24,7 @@ import 'package:khalesi/Features/Home/presentaties/widgets/news_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MyHomePage extends StatefulWidget {
+  static const String rn = "/homemain";
   final PagingController<int, NewsGet> pagingController1 =
       PagingController(firstPageKey: 0);
 
@@ -33,10 +37,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    widget.pagingController1.addPageRequestListener((page) {
-      fetchData(start: page);
+    BlocProvider.of<SliderCubit>(context)
+        .fetchDataSlider(start: 0, context: context);
 
-      BlocProvider.of<SliderCubit>(context).fetchDataSlider(start: page);
+    widget.pagingController1.addPageRequestListener((page) {
+      DataHomeSource.fetchData(
+          start: page,
+          pagingController1: widget.pagingController1,
+          context: context);
     });
     super.initState();
   }
@@ -46,7 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: appBar(context),
+        drawer: CommonDrawer.drawer(context),
+        appBar: CommonAppbar.appBar(context),
         bottomNavigationBar: botNav(),
         body: Column(
           children: [
@@ -69,16 +78,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         margin: const EdgeInsets.only(
                             left: 9, top: 10, bottom: 4, right: 9),
                         width: double.infinity,
-                        child: CachedNetworkImage(
-                          imageUrl: "${ConstLink.imgBase}${data[index].img!}",
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) {
-                            return const Expanded(child: Icon(Icons.error));
-                          },
-                          placeholder: (context, url) {
-                            return Expanded(
-                                child: CostumLoading.loadCircle(context));
-                          },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "${ConstLink.imgBasehigh}${data[index].img!}",
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) {
+                              return const Expanded(child: Icon(Icons.error));
+                            },
+                            placeholder: (context, url) {
+                              return Expanded(
+                                  child: CostumLoading.loadCircle(context));
+                            },
+                          ),
                         ),
                       );
                     },
@@ -144,39 +157,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemBuilder: (context, item, index) {
                         return NewsItem(
                           id: item.id!,
-                          path: "${ConstLink.imgBase}${item.img!}",
+                          path: "${ConstLink.imgBaselow}${item.img!}",
                           title: item.title!.scableTitle(),
                           time: item.dateTime!,
-                        );
+                        ).animate(autoPlay: true).moveX(
+                            delay: Duration(milliseconds: 500 + index + 10),
+                            begin: -500,
+                            end: 0);
                       },
                     )))
           ],
         ),
       ),
     );
-  }
-
-  fetchData({required int start}) async {
-    try {
-      var response = await Dio()
-          .get("https://alkhalissi.org/api/news?start=$start&limit=20");
-
-      if (response.statusCode == 200) {
-        List<dynamic> newsList = response.data['posts'];
-        List<NewsGet> newsModel =
-            newsList.map((json) => NewsGet.fromJson(json)).toList();
-
-        if (newsModel.isEmpty) {
-          widget.pagingController1.appendLastPage(newsModel);
-        } else {
-          widget.pagingController1.appendPage(newsModel, start + 20);
-        }
-      }
-    } catch (e) {
-      widget.pagingController1.error = e;
-
-      print(e);
-    }
   }
 
   Widget botNav() {
@@ -188,6 +181,8 @@ class _MyHomePageState extends State<MyHomePage> {
           showElevation: true,
           onItemSelected: (value) {
             BlocProvider.of<NavBarCubit>(context).changeState(value);
+            BlocProvider.of<HomeMainCubit>(context).changeState(value);
+            Navigator.pushNamed(context, MyHomePage.rn);
           },
           items: [
             FlashyTabBarItem(
@@ -229,58 +224,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         );
       },
-    );
-  }
-
-  AppBar appBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: ConstColor.blue,
-      actions: [
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(width: 0.8, color: Colors.white)),
-                  child: Icon(
-                    FontAwesomeIcons.barsStaggered,
-                    size: 25,
-                    color: ConstColor.yellow,
-                  ),
-                ),
-              ),
-              Assets.images.logo.image(
-                  fit: BoxFit.contain,
-                  width: EsaySize.width(context) / 2,
-                  height: 35),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Transform.rotate(
-                  angle: 90 * 3.14159265359 / 180,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(width: 0.8, color: Colors.white)),
-                    child: Icon(
-                      FontAwesomeIcons.magnifyingGlass,
-                      size: 25,
-                      color: ConstColor.yellow,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
     );
   }
 }

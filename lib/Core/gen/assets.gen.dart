@@ -12,11 +12,51 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/book.png
+  AssetGenImage get book => const AssetGenImage('assets/images/book.png');
+
+  /// File path: assets/images/bookmark.png
+  AssetGenImage get bookmark =>
+      const AssetGenImage('assets/images/bookmark.png');
+
+  /// File path: assets/images/home.png
+  AssetGenImage get home => const AssetGenImage('assets/images/home.png');
+
+  /// File path: assets/images/info-bookmark.png
+  AssetGenImage get infoBookmark =>
+      const AssetGenImage('assets/images/info-bookmark.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/setting.png
+  AssetGenImage get setting => const AssetGenImage('assets/images/setting.png');
+
+  /// File path: assets/images/share.png
+  AssetGenImage get share => const AssetGenImage('assets/images/share.png');
+
+  /// File path: assets/images/soal.png
+  AssetGenImage get soal => const AssetGenImage('assets/images/soal.png');
+
+  /// File path: assets/images/video.png
+  AssetGenImage get video => const AssetGenImage('assets/images/video.png');
+
+  /// File path: assets/images/voice.png
+  AssetGenImage get voice => const AssetGenImage('assets/images/voice.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [logo];
+  List<AssetGenImage> get values => [
+        book,
+        bookmark,
+        home,
+        infoBookmark,
+        logo,
+        setting,
+        share,
+        soal,
+        video,
+        voice
+      ];
 }
 
 class Assets {

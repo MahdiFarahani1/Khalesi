@@ -1,3 +1,4 @@
 class ConstLink {
-  static String imgBase = "https://alkhalissi.org/upload_list/thumbs/";
+  static String imgBaselow = "https://alkhalissi.org/upload_list/thumbs/";
+  static String imgBasehigh = "https://alkhalissi.org/upload_list/source/";
 }

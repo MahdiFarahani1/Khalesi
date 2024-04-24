@@ -1,18 +1,16 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:khalesi/Features/Home/data/model/model_all.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 
-part 'slider_state.dart';
-
-class SliderCubit extends Cubit<SliderState> {
-  SliderCubit() : super(SliderState(status: Sliderloading()));
-
-  fetchDataSlider({required int start, required BuildContext context}) async {
+class DataHomeSource {
+  static fetchData(
+      {required int start,
+      required PagingController pagingController1,
+      required BuildContext context}) async {
     try {
-      emit(SliderState(status: Sliderloading()));
       String url = "";
 
       switch (BlocProvider.of<HomeMainCubit>(context).state.status) {
@@ -33,17 +31,18 @@ class SliderCubit extends Cubit<SliderState> {
       var response = await Dio().get(url);
 
       if (response.statusCode == 200) {
-        print(response.data);
         List<dynamic> newsList = response.data['posts'];
         List<NewsGet> newsModel =
             newsList.map((json) => NewsGet.fromJson(json)).toList();
 
-        emit(SliderState(status: SliderComplete(data: newsModel)));
+        if (newsModel.isEmpty) {
+          pagingController1.appendLastPage(newsModel);
+        } else {
+          pagingController1.appendPage(newsModel, start + 20);
+        }
       }
     } catch (e) {
-      emit(SliderState(status: Slidererror()));
-
-      print(e);
+      pagingController1.error = e;
     }
   }
 }
