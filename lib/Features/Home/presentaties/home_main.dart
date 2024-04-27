@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/const/const_link.dart';
@@ -14,12 +12,12 @@ import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Core/utils/loading.dart';
 import 'package:khalesi/Core/widgets/appbar.dart';
 import 'package:khalesi/Core/widgets/drawer.dart';
+import 'package:khalesi/Core/widgets/navbar.dart';
 import 'package:khalesi/Features/Home/data/model/model_all.dart';
 import 'package:khalesi/Features/Home/data/source/fetchData.dart';
-import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/indicator/indicator_cubit.dart';
-import 'package:khalesi/Features/Home/presentaties/bloc/navbar/nav_bar_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart';
+import 'package:khalesi/Features/Home/presentaties/click_page.dart';
 import 'package:khalesi/Features/Home/presentaties/widgets/news_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -56,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         drawer: CommonDrawer.drawer(context),
         appBar: CommonAppbar.appBar(context),
-        bottomNavigationBar: botNav(),
+        bottomNavigationBar: CommonNavbar.botNav(),
         body: Column(
           children: [
             BlocBuilder<SliderCubit, SliderState>(
@@ -71,26 +69,37 @@ class _MyHomePageState extends State<MyHomePage> {
                   return CarouselSlider.builder(
                     itemCount: 4,
                     itemBuilder: (context, index, realIndex) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        margin: const EdgeInsets.only(
-                            left: 9, top: 10, bottom: 4, right: 9),
-                        width: double.infinity,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "${ConstLink.imgBasehigh}${data[index].img!}",
-                            fit: BoxFit.cover,
-                            errorWidget: (context, url, error) {
-                              return const Expanded(child: Icon(Icons.error));
-                            },
-                            placeholder: (context, url) {
-                              return Expanded(
-                                  child: CostumLoading.loadCircle(context));
-                            },
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ClickPage(
+                                  id: data[index].id!,
+                                ),
+                              ));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          margin: const EdgeInsets.only(
+                              left: 9, top: 10, bottom: 4, right: 9),
+                          width: double.infinity,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "${ConstLink.imgBasehigh}${data[index].img!}",
+                              fit: BoxFit.cover,
+                              errorWidget: (context, url, error) {
+                                return const Center(child: Icon(Icons.error));
+                              },
+                              placeholder: (context, url) {
+                                return Center(
+                                    child: CostumLoading.loadCircle(context));
+                              },
+                            ),
                           ),
                         ),
                       );
@@ -161,7 +170,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           title: item.title!.scableTitle(),
                           time: item.dateTime!,
                         ).animate(autoPlay: true).moveX(
-                            delay: Duration(milliseconds: 500 + index + 10),
+                            delay: Duration(milliseconds: 300 + index),
+                            duration: const Duration(milliseconds: 300),
                             begin: -500,
                             end: 0);
                       },
@@ -169,61 +179,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget botNav() {
-    return BlocBuilder<NavBarCubit, NavBarState>(
-      builder: (context, state) {
-        return FlashyTabBar(
-          backgroundColor: ConstColor.blue,
-          selectedIndex: state.index,
-          showElevation: true,
-          onItemSelected: (value) {
-            BlocProvider.of<NavBarCubit>(context).changeState(value);
-            BlocProvider.of<HomeMainCubit>(context).changeState(value);
-            Navigator.pushNamed(context, MyHomePage.rn);
-          },
-          items: [
-            FlashyTabBarItem(
-              activeColor: ConstColor.yellow,
-              inactiveColor: Colors.white,
-              icon: const Icon(
-                FontAwesomeIcons.newspaper,
-                size: 25,
-              ),
-              title: const Text('الاخبار'),
-            ),
-            FlashyTabBarItem(
-              activeColor: ConstColor.yellow,
-              inactiveColor: Colors.white,
-              icon: const Icon(
-                Icons.feed_outlined,
-                size: 27,
-              ),
-              title: const Text('البيانات'),
-            ),
-            FlashyTabBarItem(
-              activeColor: ConstColor.yellow,
-              inactiveColor: Colors.white,
-              icon: const Icon(
-                Icons.edit_note_outlined,
-                size: 35,
-              ),
-              title: const Text('خطب الجمعة'),
-            ),
-            FlashyTabBarItem(
-              activeColor: ConstColor.yellow,
-              inactiveColor: Colors.white,
-              icon: const Icon(
-                Icons.edit_calendar_rounded,
-                size: 26,
-              ),
-              title: const Text('المقالات'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

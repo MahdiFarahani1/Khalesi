@@ -25,6 +25,7 @@ class ContentCubit extends Cubit<ContentState> {
           break;
         case Article():
           url = "https://alkhalissi.org/api/article/content/$id";
+
           break;
         default:
       }
@@ -40,7 +41,6 @@ class ContentCubit extends Cubit<ContentState> {
         ));
       }
     } catch (e) {
-      print(e);
       emit(ContentState(
         status: ClickError(),
       ));

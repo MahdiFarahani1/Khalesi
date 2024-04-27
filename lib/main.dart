@@ -8,6 +8,7 @@ import 'package:khalesi/Features/Home/presentaties/bloc/indicator/indicator_cubi
 import 'package:khalesi/Features/Home/presentaties/bloc/navbar/nav_bar_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/home_main.dart';
+import 'package:khalesi/Features/Search/presententaion/Search-main/search_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ContentCubit(),
         ),
-        // BlocProvider(
-        //   create: (context) => SubjectBloc(),
-        // ),
+        BlocProvider(
+          create: (context) => SearchCubit(),
+        ),
         // BlocProvider(
         //   create: (context) => SubjectBloc(),
         // ),

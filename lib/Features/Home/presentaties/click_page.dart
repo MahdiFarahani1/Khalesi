@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/const/const_link.dart';
 import 'package:khalesi/Core/extra/format_date.dart';
@@ -32,7 +35,6 @@ class _ClickPageState extends State<ClickPage> {
 
   @override
   void initState() {
-    print(widget.id);
     BlocProvider.of<ContentCubit>(context)
         .fetchData(id: widget.id, context: context);
     super.initState();
@@ -101,6 +103,8 @@ class _ClickPageState extends State<ClickPage> {
                           horizontal: 12, vertical: 8),
                       child: HtmlWidget(
                         '''
+                        <head><meta charset='UTF-8'/><base href='https://alkhalissi.org/'></head>
+
                         <div style="text-align: justify;">
                           $content
                                               </div>
@@ -134,6 +138,70 @@ class _ClickPageState extends State<ClickPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  width: EsaySize.width(context),
+                  height: 45,
+                  color: Colors.grey,
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                  color: ConstColor.yellow,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: const Icon(
+                                Icons.ios_share_outlined,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          EsaySize.gap(12),
+                          StatefulBuilder(
+                            builder: (context, setState) {
+                              return GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: 32,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                      color: ConstColor.yellow,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Icon(
+                                    !iconSelect
+                                        ? Icons.bookmark_add_outlined
+                                        : Icons.bookmark,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                      const Text("حجم الخط :"),
+                      Container(
+                        alignment: Alignment.center,
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            color: ConstColor.yellow,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(FontAwesomeIcons.plus)),
+                      ),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(FontAwesomeIcons.minus))
+                    ],
+                  ),
+                ),
                 Text(
                   maxLines: 3,
                   title,
@@ -170,45 +238,6 @@ class _ClickPageState extends State<ClickPage> {
               ],
             ),
           ),
-          Column(
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                      color: ConstColor.yellow,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: const Icon(
-                    Icons.ios_share_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              EsaySize.gap(12),
-              StatefulBuilder(
-                builder: (context, setState) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                          color: ConstColor.yellow,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Icon(
-                        !iconSelect
-                            ? Icons.bookmark_add_outlined
-                            : Icons.bookmark,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                },
-              )
-            ],
-          )
         ],
       ),
     );

@@ -33,7 +33,6 @@ class SliderCubit extends Cubit<SliderState> {
       var response = await Dio().get(url);
 
       if (response.statusCode == 200) {
-        print(response.data);
         List<dynamic> newsList = response.data['posts'];
         List<NewsGet> newsModel =
             newsList.map((json) => NewsGet.fromJson(json)).toList();

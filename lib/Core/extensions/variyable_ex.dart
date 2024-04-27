@@ -24,4 +24,19 @@ extension StringEx on String {
       return this;
     }
   }
+
+  String searchCategory() {
+    switch (this) {
+      case "الاخبار":
+        return "news";
+      case "البيانات":
+        return "speech";
+      case "خطب الجمعة":
+        return "sermon";
+      case "المقالات":
+        return "article";
+      default:
+        return "news";
+    }
+  }
 }

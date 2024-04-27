@@ -55,6 +55,7 @@ dependencies:
   firebase_core: ^2.25.5
   firebase_messaging: ^14.7.17
   flashy_tab_bar2: ^0.0.10
+  dropdown_button2: ^2.3.9
 dev_dependencies:
   flutter_test:
     sdk: flutter

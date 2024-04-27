@@ -6,9 +6,7 @@ import 'package:khalesi/Core/utils/esay_size.dart';
 class DrawerItem {
   static Widget item({required String path, required String txt}) {
     return GestureDetector(
-      onTap: () {
-        print("fuck");
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.only(bottom: 9),
         child: Row(
