@@ -10,7 +10,8 @@ import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart
 import 'package:khalesi/Features/Home/presentaties/home_main.dart';
 import 'package:khalesi/Features/Search/presententaion/Search-main/search_cubit.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

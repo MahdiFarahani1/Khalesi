@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -103,9 +101,7 @@ class _ClickPageState extends State<ClickPage> {
                           horizontal: 12, vertical: 8),
                       child: HtmlWidget(
                         '''
-                        <head><meta charset='UTF-8'/><base href='https://alkhalissi.org/'></head>
-
-                        <div style="text-align: justify;">
+                          <div style="text-align: justify;">
                           $content
                                               </div>
                                               ''',
@@ -129,117 +125,162 @@ class _ClickPageState extends State<ClickPage> {
     required String img,
     required int id,
   }) {
-    return Padding(
-      padding: const EdgeInsets.all(25.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  width: EsaySize.width(context),
-                  height: 45,
-                  color: Colors.grey,
-                  child: Row(
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              width: 32,
-                              height: 32,
-                              decoration: BoxDecoration(
-                                  color: ConstColor.yellow,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: const Icon(
-                                Icons.ios_share_outlined,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          EsaySize.gap(12),
-                          StatefulBuilder(
-                            builder: (context, setState) {
-                              return GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 32,
-                                  height: 32,
-                                  decoration: BoxDecoration(
-                                      color: ConstColor.yellow,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Icon(
-                                    !iconSelect
-                                        ? Icons.bookmark_add_outlined
-                                        : Icons.bookmark,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                      const Text("حجم الخط :"),
-                      Container(
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 0, top: 12),
+          width: EsaySize.width(context),
+          height: 45,
+          color: ConstColor.blue,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 8),
+                child: Text(
+                  "حجم الخط :",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: EsaySize.width(context) * 0.38),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        print("plus");
+                      },
+                      child: Container(
                         alignment: Alignment.center,
                         width: 32,
                         height: 32,
                         decoration: BoxDecoration(
                             color: ConstColor.yellow,
                             borderRadius: BorderRadius.circular(8)),
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(FontAwesomeIcons.plus)),
+                        child: const Icon(
+                          FontAwesomeIcons.plus,
+                          size: 20,
+                          color: Colors.white,
+                        ),
                       ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(FontAwesomeIcons.minus))
-                    ],
-                  ),
+                    ),
+                    EsaySize.gap(8),
+                    GestureDetector(
+                      onTap: () {
+                        print("mines");
+                      },
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            color: ConstColor.yellow,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Icon(
+                          FontAwesomeIcons.minus,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  maxLines: 3,
-                  title,
-                  style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
-                ),
-                EsaySize.gap(8),
-                Container(
-                  width: 140,
-                  height: 1,
-                  color: const Color.fromRGBO(142, 201, 51, 1),
-                ),
-                EsaySize.gap(8),
-                Row(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
                   children: [
-                    const Text(
-                      "الاخبار",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            color: ConstColor.yellow,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const Icon(
+                          Icons.ios_share_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    EsaySize.gap(6),
-                    const Text(
-                      "__",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                    EsaySize.gap(6),
-                    Text(
-                      FormatData.result(time),
-                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    EsaySize.gap(12),
+                    StatefulBuilder(
+                      builder: (context, setState) {
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                                color: ConstColor.yellow,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Icon(
+                              !iconSelect
+                                  ? Icons.bookmark_add_outlined
+                                  : Icons.bookmark,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      },
                     )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      maxLines: 3,
+                      title,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
+                    ),
+                    EsaySize.gap(8),
+                    Container(
+                      width: 140,
+                      height: 1,
+                      color: const Color.fromRGBO(142, 201, 51, 1),
+                    ),
+                    EsaySize.gap(8),
+                    Row(
+                      children: [
+                        const Text(
+                          "الاخبار",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        EsaySize.gap(6),
+                        const Text(
+                          "__",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        EsaySize.gap(6),
+                        Text(
+                          FormatData.result(time),
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

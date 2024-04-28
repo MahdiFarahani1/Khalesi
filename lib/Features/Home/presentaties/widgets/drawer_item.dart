@@ -1,14 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
+import 'package:khalesi/Features/Home/presentaties/home_main.dart';
+import 'package:khalesi/Features/Pdf/presentaton/pdf.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DrawerItem {
-  static Widget item({required String path, required String txt}) {
+  static Widget item(
+      {required String path,
+      required String txt,
+      required VoidCallback onTap}) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
-        margin: EdgeInsets.only(bottom: 9),
+        margin: const EdgeInsets.only(bottom: 9),
         child: Row(
           children: [
             EsaySize.gap(15),
@@ -41,7 +48,7 @@ class DrawerItem {
   static Widget allItems(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: EsaySize.width(context) * 1.5,
           height: 200,
           child: Padding(
@@ -60,15 +67,58 @@ class DrawerItem {
               border: Border.all(color: ConstColor.yellow)),
         ),
         EsaySize.safeGap(20),
-        item(path: Assets.images.home.path, txt: "الصفحه الرییسیه"),
-        item(path: Assets.images.book.path, txt: "الصفحه"),
-        item(path: Assets.images.voice.path, txt: "الصفحه"),
-        item(path: Assets.images.video.path, txt: "الصفحه الرییسیه"),
-        item(path: Assets.images.soal.path, txt: "الصفحه الرییسیه"),
-        item(path: Assets.images.bookmark.path, txt: "الصفحه الرییسیه"),
-        item(path: Assets.images.infoBookmark.path, txt: "الصفحه الرییسیه"),
-        item(path: Assets.images.share.path, txt: "الصفحه الرییسیه"),
-        item(path: Assets.images.setting.path, txt: "الصفحه الرییسیه"),
+        item(
+          path: Assets.images.home.path,
+          txt: "الصفحة الرئيسية",
+          onTap: () {
+            Navigator.pushNamed(context, MyHomePage.rn);
+          },
+        ),
+        item(
+          path: Assets.images.book.path,
+          txt: "المكتبة",
+          onTap: () {
+            Navigator.pushNamed(context, PdfPage.rn);
+          },
+        ),
+        item(
+          path: Assets.images.voice.path,
+          txt: "الصوتيات",
+          onTap: () {},
+        ),
+        item(
+          path: Assets.images.video.path,
+          txt: " المرئيات",
+          onTap: () {},
+        ),
+        item(
+          path: Assets.images.soal.path,
+          txt: "الاسئلة",
+          onTap: () {},
+        ),
+        item(
+          path: Assets.images.bookmark.path,
+          txt: "المفضلة",
+          onTap: () {},
+        ),
+        item(
+          path: Assets.images.infoBookmark.path,
+          txt: "حول التطبيق",
+          onTap: () {},
+        ),
+        item(
+          path: Assets.images.share.path,
+          txt: "مشاركة التطبيق",
+          onTap: () {
+            Share.share(
+                "https://play.google.com/store/apps/details?id=com.dijlah.alkhalissi");
+          },
+        ),
+        item(
+          path: Assets.images.setting.path,
+          txt: "الاعدادات",
+          onTap: () {},
+        ),
       ],
     );
   }

@@ -117,7 +117,7 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 12),
+                padding: const EdgeInsets.only(top: 12, bottom: 12),
                 child: Row(
                   children: [
                     EsaySize.gap(6),

@@ -1,26 +1,3 @@
-class TitleNewsModel {
-  List<NewsGet>? news;
-
-  TitleNewsModel({this.news});
-
-  TitleNewsModel.fromJson(Map<String, dynamic> json) {
-    if (json['posts'] != null) {
-      news = <NewsGet>[];
-      json['posts'].forEach((v) {
-        news!.add(NewsGet.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (news != null) {
-      data['posts'] = news!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
 class NewsGet {
   int? id;
   int? categoryId;
