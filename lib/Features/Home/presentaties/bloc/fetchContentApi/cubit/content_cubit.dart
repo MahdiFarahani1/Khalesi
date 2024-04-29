@@ -46,4 +46,45 @@ class ContentCubit extends Cubit<ContentState> {
       ));
     }
   }
+
+  fetchDataSave(
+      {required int id,
+      required BuildContext context,
+      required String categoryTitle}) async {
+    try {
+      emit(ContentState(status: ClickLoading()));
+      String url = "";
+      switch (categoryTitle) {
+        case "اخبار ونشاطات":
+          url = "https://alkhalissi.org/api/news/content/$id";
+          break;
+        case "البيانات الرسمية":
+          url = "https://alkhalissi.org/api/speech/content/$id";
+          break;
+        case "تصنيف الاول":
+          url = "https://alkhalissi.org/api/sermon/content/$id";
+          break;
+        case "مقالات مختارة":
+          url = "https://alkhalissi.org/api/article/content/$id";
+
+          break;
+        default:
+      }
+      var response = await Dio().get(url);
+
+      if (response.statusCode == 200) {
+        var newsModel = ContentModel.fromJson(response.data);
+
+        emit(ContentState(status: ClickComplete(), data: newsModel));
+      } else {
+        emit(ContentState(
+          status: ClickError(),
+        ));
+      }
+    } catch (e) {
+      emit(ContentState(
+        status: ClickError(),
+      ));
+    }
+  }
 }

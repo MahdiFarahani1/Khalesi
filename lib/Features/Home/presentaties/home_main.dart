@@ -19,6 +19,7 @@ import 'package:khalesi/Features/Home/presentaties/bloc/indicator/indicator_cubi
 import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/click_page.dart';
 import 'package:khalesi/Features/Home/presentaties/widgets/news_item.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -75,32 +76,65 @@ class _MyHomePageState extends State<MyHomePage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ClickPage(
+                                  categoryTitle: data[index].categoryTitle!,
                                   id: data[index].id!,
                                 ),
                               ));
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          margin: const EdgeInsets.only(
-                              left: 9, top: 10, bottom: 4, right: 9),
-                          width: double.infinity,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "${ConstLink.imgBasehigh}${data[index].img!}",
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, error) {
-                                return const Center(child: Icon(Icons.error));
-                              },
-                              placeholder: (context, url) {
-                                return Center(
-                                    child: CostumLoading.loadCircle(context));
-                              },
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              margin: const EdgeInsets.only(
+                                  top: 10, bottom: 4, left: 6, right: 6),
+                              width: double.infinity,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      "${ConstLink.imgBasehigh}${data[index].img!}",
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) {
+                                    return const Center(
+                                        child: Icon(Icons.error));
+                                  },
+                                  placeholder: (context, url) {
+                                    return Center(
+                                        child:
+                                            CostumLoading.loadCircle(context));
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                margin: const EdgeInsets.only(
+                                    top: 10, bottom: 4, left: 6, right: 6),
+                                height: 62,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.transparent.withAlpha(100),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.white,
+                                    highlightColor: ConstColor.yellow,
+                                    direction: ShimmerDirection.rtl,
+                                    period: const Duration(milliseconds: 2000),
+                                    child: Text(
+                                      data[index].title!.scableTitle(),
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       );
                     },
@@ -165,6 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                       itemBuilder: (context, item, index) {
                         return NewsItem(
+                          catgoryTitle: item.categoryTitle!,
                           id: item.id!,
                           path: "${ConstLink.imgBaselow}${item.img!}",
                           title: item.title!.scableTitle(),

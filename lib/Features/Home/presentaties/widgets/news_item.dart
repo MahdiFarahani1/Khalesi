@@ -11,12 +11,16 @@ class NewsItem extends StatelessWidget {
   final String title;
   final String time;
   final int id;
+  final String catgoryTitle;
+  final bool isSaveMode;
   const NewsItem(
       {super.key,
+      this.isSaveMode = false,
       required this.path,
       required this.title,
       required this.time,
-      required this.id});
+      required this.id,
+      required this.catgoryTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,8 @@ class NewsItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ClickPage(
+                isSaveMode: isSaveMode,
+                categoryTitle: catgoryTitle,
                 id: id,
               ),
             ));

@@ -29,9 +29,11 @@ class Post {
   int? dateTime;
   String? content;
   String? slug;
+  String? categoryTitle;
 
   Post(
       {this.id,
+      this.categoryTitle,
       this.categoryId,
       this.title,
       this.img,
@@ -47,6 +49,7 @@ class Post {
     dateTime = json['date_time'];
     content = json['content'];
     slug = json['slug'];
+    categoryTitle = json["category_title"];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +61,7 @@ class Post {
     data['date_time'] = dateTime;
     data['content'] = content;
     data['slug'] = slug;
+    data["category_title"] = categoryTitle;
     return data;
   }
 }

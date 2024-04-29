@@ -251,6 +251,7 @@ class _SearchPageState extends State<SearchPage> {
                         },
                         itemBuilder: (context, item, index) {
                           return NewsItem(
+                              catgoryTitle: item.categoryTitle!,
                               path: "${ConstLink.imgBaselow}${item.img!}",
                               title: item.title!,
                               time: item.dateTime!,

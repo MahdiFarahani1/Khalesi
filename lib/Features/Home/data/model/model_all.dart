@@ -4,11 +4,18 @@ class NewsGet {
   String? title;
   String? img;
   String? dateTime;
-
-  NewsGet({this.id, this.categoryId, this.title, this.img, this.dateTime});
+  String? categoryTitle;
+  NewsGet(
+      {this.id,
+      this.categoryId,
+      this.title,
+      this.img,
+      this.dateTime,
+      this.categoryTitle});
 
   factory NewsGet.fromJson(Map<String, dynamic> json) {
     return NewsGet(
+      categoryTitle: json["category_title"],
       id: json['id'],
       categoryId: json['category_id'],
       title: json['title'],
@@ -24,6 +31,7 @@ class NewsGet {
       'title': title,
       'img': img,
       'date_time': dateTime,
+      'category_title': categoryTitle,
     };
   }
 }

@@ -1,10 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
+import 'package:khalesi/Features/About_Us/presentations/screens/about_us_page.dart';
 import 'package:khalesi/Features/Home/presentaties/home_main.dart';
 import 'package:khalesi/Features/Pdf/presentaton/pdf.dart';
+import 'package:khalesi/Features/Save/presentation/view_save.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DrawerItem {
@@ -99,12 +100,16 @@ class DrawerItem {
         item(
           path: Assets.images.bookmark.path,
           txt: "المفضلة",
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, SavePage.rn);
+          },
         ),
         item(
           path: Assets.images.infoBookmark.path,
           txt: "حول التطبيق",
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AboutUs.rn);
+          },
         ),
         item(
           path: Assets.images.share.path,

@@ -3,11 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
+import 'package:khalesi/Features/Home/presentaties/home_main.dart';
 import 'package:khalesi/Features/Search/presententaion/search_page.dart';
 
 class CommonAppbar {
   static AppBar appBar(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: ConstColor.blue,
       actions: [
         Expanded(
@@ -36,10 +38,15 @@ class CommonAppbar {
                   );
                 }),
               ),
-              Assets.images.logo.image(
-                  fit: BoxFit.contain,
-                  width: EsaySize.width(context) / 2,
-                  height: 35),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, MyHomePage.rn);
+                },
+                child: Assets.images.logo.image(
+                    fit: BoxFit.contain,
+                    width: EsaySize.width(context) / 2,
+                    height: 35),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Transform.rotate(

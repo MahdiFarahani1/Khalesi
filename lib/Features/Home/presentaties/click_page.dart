@@ -13,15 +13,22 @@ import 'package:khalesi/Core/widgets/appbar.dart';
 import 'package:khalesi/Core/widgets/drawer.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/cubit/content_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/model/content_model.dart';
+import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
+import 'package:khalesi/Features/Save/data/dataBase/model_database.dart';
+import 'package:khalesi/Features/Save/presentation/bloc/save_news_cubit.dart';
+import 'package:khalesi/main.dart';
+import 'package:share_plus/share_plus.dart';
 
 // ignore: must_be_immutable
 class ClickPage extends StatefulWidget {
   final int id;
-
-  const ClickPage({
-    super.key,
-    required this.id,
-  });
+  final bool isSaveMode;
+  final String categoryTitle;
+  const ClickPage(
+      {super.key,
+      this.isSaveMode = false,
+      required this.id,
+      required this.categoryTitle});
 
   @override
   State<ClickPage> createState() => _ClickPageState();
@@ -33,8 +40,14 @@ class _ClickPageState extends State<ClickPage> {
 
   @override
   void initState() {
-    BlocProvider.of<ContentCubit>(context)
-        .fetchData(id: widget.id, context: context);
+    iconSelect = saveAll.get("iconSelect${widget.id}") ?? false;
+    if (widget.isSaveMode) {
+      BlocProvider.of<ContentCubit>(context).fetchDataSave(
+          id: widget.id, context: context, categoryTitle: widget.categoryTitle);
+    } else {
+      BlocProvider.of<ContentCubit>(context)
+          .fetchData(id: widget.id, context: context);
+    }
     super.initState();
   }
 
@@ -91,6 +104,7 @@ class _ClickPageState extends State<ClickPage> {
                       ),
                     ),
                     titleUi(
+                      categoryTitle: data.post![0].categoryTitle!,
                       id: data.post![0].id!,
                       title: data.post![0].title!,
                       time: data.post![0].dateTime!,
@@ -124,6 +138,7 @@ class _ClickPageState extends State<ClickPage> {
     required String title,
     required String img,
     required int id,
+    required String categoryTitle,
   }) {
     return Column(
       children: [
@@ -148,9 +163,7 @@ class _ClickPageState extends State<ClickPage> {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        print("plus");
-                      },
+                      onTap: () {},
                       child: Container(
                         alignment: Alignment.center,
                         width: 32,
@@ -167,9 +180,7 @@ class _ClickPageState extends State<ClickPage> {
                     ),
                     EsaySize.gap(8),
                     GestureDetector(
-                      onTap: () {
-                        print("mines");
-                      },
+                      onTap: () {},
                       child: Container(
                         width: 32,
                         height: 32,
@@ -191,7 +202,29 @@ class _ClickPageState extends State<ClickPage> {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        String tag = "";
+
+                        switch (BlocProvider.of<HomeMainCubit>(context)
+                            .state
+                            .status) {
+                          case News():
+                            tag = "n";
+                            break;
+                          case Speech():
+                            tag = "p";
+                            break;
+                          case Sermon():
+                            tag = "s";
+                            break;
+                          case Article():
+                            tag = "a";
+                            break;
+                          default:
+                        }
+                        Share.share(
+                            "https://alkhalissi.org/${tag}${widget.id}");
+                      },
                       child: Container(
                         width: 32,
                         height: 32,
@@ -207,22 +240,60 @@ class _ClickPageState extends State<ClickPage> {
                     EsaySize.gap(12),
                     StatefulBuilder(
                       builder: (context, setState) {
-                        return GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                                color: ConstColor.yellow,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Icon(
-                              !iconSelect
-                                  ? Icons.bookmark_add_outlined
-                                  : Icons.bookmark,
-                              color: Colors.white,
+                        return StatefulBuilder(builder: (context, state) {
+                          return GestureDetector(
+                            onTap: () {
+                              var model = ModelDataBase(
+                                categoryTitle: categoryTitle,
+                                path: img,
+                                time: FormatData.result(time),
+                                title: title,
+                                id: id,
+                              );
+                              if (!iconSelect) {
+                                saveAll.put("iconSelect${widget.id}", true);
+
+                                saveModel.add(model);
+                              } else {
+                                saveAll.delete("iconSelect${widget.id}");
+
+                                for (var value in saveModel.values) {
+                                  if (value.id == model.id) {
+                                    var keyToRemove = saveModel.keys.firstWhere(
+                                        (key) => saveModel.get(key) == value,
+                                        orElse: () => null);
+                                    if (keyToRemove != null) {
+                                      saveModel.delete(keyToRemove);
+                                    }
+                                  }
+                                }
+                              }
+
+                              iconSelect = !iconSelect;
+                              setState(
+                                () {},
+                              );
+                              BlocProvider.of<SaveNewsCubit>(context)
+                                  .loadSave(context);
+                              saveModel.values.forEach((element) {
+                                print(element.categoryTitle);
+                              });
+                            },
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                  color: ConstColor.yellow,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Icon(
+                                !iconSelect
+                                    ? Icons.bookmark_add_outlined
+                                    : Icons.bookmark,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        });
                       },
                     )
                   ],
