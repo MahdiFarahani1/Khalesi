@@ -1,23 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:khalesi/Features/Pdf/data/model/model.dart';
+import 'package:khalesi/Features/Pdf_Videos/data/model/model_videos.dart';
 
-class DataPdfSource {
+class DataVideosSource {
   static fetchData(
-      {required int start,
-      required PagingController pagingController1,
+      {required PagingController pagingController1,
       required BuildContext context}) async {
     try {
-      String url = "https://alkhalissi.org/api/book";
+      String url = "https://alkhalissi.org/api/Videos";
 
       var response = await Dio().get(url);
 
       if (response.statusCode == 200) {
-        List<dynamic> newsList = response.data['posts'];
-        List<PdfModel> newsModel =
-            newsList.map((json) => PdfModel.fromJson(json)).toList();
-        print(response.data);
+        List<dynamic> newsList = response.data['videos'];
+        List<VideosModel> newsModel =
+            newsList.map((json) => VideosModel.fromJson(json)).toList();
 
         pagingController1.appendLastPage(newsModel);
       }

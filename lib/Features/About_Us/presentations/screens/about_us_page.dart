@@ -3,6 +3,7 @@ import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Core/widgets/appbar.dart';
+import 'package:khalesi/Core/widgets/drawer.dart';
 import 'package:khalesi/Features/About_Us/widgets/widget_us.dart';
 
 class AboutUs extends StatelessWidget {
@@ -15,6 +16,7 @@ class AboutUs extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: CommonAppbar.appBar(context),
+        drawer: CommonDrawer.drawer(context),
         body: Column(
           children: [
             Container(

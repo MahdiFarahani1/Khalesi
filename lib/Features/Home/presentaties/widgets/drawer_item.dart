@@ -4,8 +4,10 @@ import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Features/About_Us/presentations/screens/about_us_page.dart';
 import 'package:khalesi/Features/Home/presentaties/home_main.dart';
-import 'package:khalesi/Features/Pdf/presentaton/pdf.dart';
+import 'package:khalesi/Features/Pdf_Videos/presentaton/pdf.dart';
+import 'package:khalesi/Features/Pdf_Videos/presentaton/videos.dart';
 import 'package:khalesi/Features/Save/presentation/view_save.dart';
+import 'package:khalesi/Features/questions/presntations/ques.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DrawerItem {
@@ -90,12 +92,16 @@ class DrawerItem {
         item(
           path: Assets.images.video.path,
           txt: " المرئيات",
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, VideosPage.rn);
+          },
         ),
         item(
           path: Assets.images.soal.path,
           txt: "الاسئلة",
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, QuesPage.rn);
+          },
         ),
         item(
           path: Assets.images.bookmark.path,

@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => IndicatorCubit(),
         ),
+
         BlocProvider(
           create: (context) => SliderCubit(),
         ),

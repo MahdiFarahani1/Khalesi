@@ -60,6 +60,7 @@ class _SearchPageState extends State<SearchPage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: ConstColor.blue,
           actions: [

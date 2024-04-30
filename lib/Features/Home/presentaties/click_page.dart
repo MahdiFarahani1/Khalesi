@@ -222,8 +222,7 @@ class _ClickPageState extends State<ClickPage> {
                             break;
                           default:
                         }
-                        Share.share(
-                            "https://alkhalissi.org/${tag}${widget.id}");
+                        Share.share("https://alkhalissi.org/$tag${widget.id}");
                       },
                       child: Container(
                         width: 32,
@@ -275,9 +274,6 @@ class _ClickPageState extends State<ClickPage> {
                               );
                               BlocProvider.of<SaveNewsCubit>(context)
                                   .loadSave(context);
-                              saveModel.values.forEach((element) {
-                                print(element.categoryTitle);
-                              });
                             },
                             child: Container(
                               width: 32,
