@@ -76,16 +76,19 @@ class _PdfPageState extends State<PdfPage> {
                               child: SizedBox(
                                 width: EsaySize.width(context) * 0.24,
                                 height: EsaySize.height(context) * 0.175,
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl:
-                                      "${ConstLink.imgBaselow}${item.img}",
-                                  placeholder: (context, url) {
-                                    return CostumLoading.loadCircle(context);
-                                  },
-                                  errorWidget: (context, url, error) {
-                                    return const Icon(Icons.error);
-                                  },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl:
+                                        "${ConstLink.imgBaselow}${item.img}",
+                                    placeholder: (context, url) {
+                                      return CostumLoading.loadCircle(context);
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return const Icon(Icons.error);
+                                    },
+                                  ),
                                 ),
                               ),
                             ),

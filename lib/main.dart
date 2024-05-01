@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:khalesi/Config/app-routes.dart';
 import 'package:khalesi/Core/gen/fonts.gen.dart';
+import 'package:khalesi/Features/Audio/presentation/bloc/audio/audio_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/cubit/content_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/indicator/indicator_cubit.dart';
@@ -17,6 +18,7 @@ late Box saveAll;
 late Box saveModel;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Hive.initFlutter();
   saveAll = await Hive.openBox("saveAll");
 
@@ -55,9 +57,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SaveNewsCubit(),
         ),
-        // BlocProvider(
-        //   create: (context) => SubjectBloc(),
-        // ),
+        BlocProvider(
+          create: (context) => AudioCubit(),
+        ),
         // BlocProvider(
         //   create: (context) => SubjectBloc(),
         // ),

@@ -3,10 +3,12 @@ import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Features/About_Us/presentations/screens/about_us_page.dart';
+import 'package:khalesi/Features/Audio/presentation/audio_page.dart';
 import 'package:khalesi/Features/Home/presentaties/home_main.dart';
 import 'package:khalesi/Features/Pdf_Videos/presentaton/pdf.dart';
 import 'package:khalesi/Features/Pdf_Videos/presentaton/videos.dart';
 import 'package:khalesi/Features/Save/presentation/view_save.dart';
+import 'package:khalesi/Features/Settings/presentation/setting.dart';
 import 'package:khalesi/Features/questions/presntations/ques.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -87,7 +89,9 @@ class DrawerItem {
         item(
           path: Assets.images.voice.path,
           txt: "الصوتيات",
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AudioPage.rn);
+          },
         ),
         item(
           path: Assets.images.video.path,
@@ -128,7 +132,9 @@ class DrawerItem {
         item(
           path: Assets.images.setting.path,
           txt: "الاعدادات",
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, SettingPage.rn);
+          },
         ),
       ],
     );
