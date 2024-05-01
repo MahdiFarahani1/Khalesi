@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:khalesi/Config/setup.dart';
 import 'package:khalesi/Features/Save/data/dataBase/model_database.dart';
-import 'package:khalesi/main.dart';
 
 part 'save_news_state.dart';
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:khalesi/Config/setup.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/const/const_link.dart';
 import 'package:khalesi/Core/extra/format_date.dart';
@@ -16,7 +17,6 @@ import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/model/co
 import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Save/data/dataBase/model_database.dart';
 import 'package:khalesi/Features/Save/presentation/bloc/save_news_cubit.dart';
-import 'package:khalesi/main.dart';
 import 'package:share_plus/share_plus.dart';
 
 // ignore: must_be_immutable
