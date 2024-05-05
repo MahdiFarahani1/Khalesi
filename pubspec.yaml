@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.8+8
 
 environment:
   sdk: ">=3.3.1 <4.0.0"
@@ -63,7 +63,8 @@ dependencies:
   shimmer: ^3.0.0
   highlight_text: ^1.7.0
   audioplayers: ^6.0.0
-
+  drop_shadow: ^0.1.0
+  app_settings: ^5.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -108,11 +109,16 @@ flutter:
         - asset: assets/fonts/Al-Jazeera-Arabic-Regular.ttf
         - asset: assets/fonts/Al-Jazeera-Arabic-Bold.ttf
           weight: 600
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+
+    - family: Trajan
+      fonts:
+        - asset: assets/fonts/AGCRegular.ttf
+        - asset: assets/fonts/AGCBold.ttf
+          weight: 600
+    - family: Salamat
+      fonts:
+        - asset: assets/fonts/Salamat.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

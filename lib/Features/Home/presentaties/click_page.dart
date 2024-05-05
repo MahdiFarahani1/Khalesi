@@ -17,6 +17,7 @@ import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/model/co
 import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Save/data/dataBase/model_database.dart';
 import 'package:khalesi/Features/Save/presentation/bloc/save_news_cubit.dart';
+import 'package:khalesi/Features/Settings/presentation/bloc/cubit/settings_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
 // ignore: must_be_immutable
@@ -113,13 +114,17 @@ class _ClickPageState extends State<ClickPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8),
-                      child: HtmlWidget(
-                        '''
-                          <div style="text-align: justify;">
-                          $content
-                                              </div>
-                                              ''',
-                        textStyle: const TextStyle(),
+                      child: BlocBuilder<SettingsCubit, SettingsState>(
+                        builder: (context, state) {
+                          return HtmlWidget(
+                            '''
+                                                <div style="text-align: justify;">
+                                                $content
+                                                                    </div>
+                                                                    ''',
+                            textStyle: TextStyle(fontSize: state.fontSize),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -163,7 +168,9 @@ class _ClickPageState extends State<ClickPage> {
                 child: Row(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        BlocProvider.of<SettingsCubit>(context).plusFont();
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 32,
@@ -180,7 +187,9 @@ class _ClickPageState extends State<ClickPage> {
                     ),
                     EsaySize.gap(8),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        BlocProvider.of<SettingsCubit>(context).nagitivFont();
+                      },
                       child: Container(
                         width: 32,
                         height: 32,

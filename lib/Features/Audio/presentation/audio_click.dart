@@ -5,6 +5,7 @@ import 'package:khalesi/Core/const/const_Color.dart';
 import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Features/Audio/presentation/bloc/audio/audio_cubit.dart';
+import 'package:khalesi/Features/Audio/repository/foramt_duration.dart';
 
 class AudioClick extends StatefulWidget {
   final String title;
@@ -106,7 +107,7 @@ class _AudioClickState extends State<AudioClick> {
                       Padding(
                         padding: const EdgeInsets.only(right: 20, top: 8),
                         child: Text(
-                          formatDuration(state.position),
+                          FormatDuration.formatDuration(state.position),
                           style:
                               TextStyle(color: ConstColor.yellow, fontSize: 15),
                         ),
@@ -114,7 +115,8 @@ class _AudioClickState extends State<AudioClick> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20, top: 8),
                         child: Text(
-                          formatDuration(state.duration - state.position),
+                          FormatDuration.formatDuration(
+                              state.duration - state.position),
                           style:
                               TextStyle(color: ConstColor.yellow, fontSize: 15),
                         ),
@@ -158,12 +160,5 @@ class _AudioClickState extends State<AudioClick> {
         ),
       ),
     );
-  }
-
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 }

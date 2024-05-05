@@ -8,7 +8,7 @@
 PRODUCT_NAME = khalesi
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.khalesi
+PRODUCT_BUNDLE_IDENTIFIER = com.dijlah.alkhalissi
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.

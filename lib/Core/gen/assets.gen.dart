@@ -38,6 +38,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/soal.png
   AssetGenImage get soal => const AssetGenImage('assets/images/soal.png');
 
+  /// File path: assets/images/splash.jpg
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.jpg');
+
   /// File path: assets/images/video.png
   AssetGenImage get video => const AssetGenImage('assets/images/video.png');
 
@@ -54,6 +57,7 @@ class $AssetsImagesGen {
         setting,
         share,
         soal,
+        splash,
         video,
         voice
       ];

@@ -89,7 +89,7 @@ class NewsItem extends StatelessWidget {
                   title,
                   maxLines: 3,
                   style: const TextStyle(
-                    fontSize: 16.5,
+                    fontSize: 16,
                   ),
                 ),
               ),

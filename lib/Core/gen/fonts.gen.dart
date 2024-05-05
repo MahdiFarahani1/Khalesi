@@ -12,4 +12,10 @@ class FontFamily {
 
   /// Font family: Arabic
   static const String arabic = 'Arabic';
+
+  /// Font family: Salamat
+  static const String salamat = 'Salamat';
+
+  /// Font family: Trajan
+  static const String trajan = 'Trajan';
 }

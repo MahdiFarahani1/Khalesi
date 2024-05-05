@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "932729475257",
+    "project_id": "alkhalissi-c3ed3",
+    "storage_bucket": "alkhalissi-c3ed3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932729475257:android:04b985fbc92ea9d0068b68",
+        "android_client_info": {
+          "package_name": "com.dijlah.alkhalissi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932729475257-05sv41nmq45ue1eogph7pkitf93bbkqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHwUUaWZKeqGl08_KajIS7Iqi5feq82x4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932729475257-05sv41nmq45ue1eogph7pkitf93bbkqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
