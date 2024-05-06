@@ -63,6 +63,7 @@ class _ClickPageState extends State<ClickPage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: CommonAppbar.appBar(context),
         drawer: CommonDrawer.drawer(context),
         body: BlocBuilder<ContentCubit, ContentState>(

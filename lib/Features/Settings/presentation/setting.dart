@@ -7,6 +7,7 @@ import 'package:khalesi/Core/gen/fonts.gen.dart';
 import 'package:khalesi/Core/widgets/appbar.dart';
 import 'package:khalesi/Core/widgets/drawer.dart';
 import 'package:khalesi/Features/Settings/presentation/bloc/cubit/settings_cubit.dart';
+import 'package:khalesi/Features/Settings/presentation/bloc/theme-cubit/theme_cubit.dart';
 import 'package:khalesi/Features/Settings/presentation/widgets/base.dart';
 
 class SettingPage extends StatelessWidget {
@@ -96,6 +97,7 @@ class SettingPage extends StatelessWidget {
                     BlocProvider.of<SettingsCubit>(context)
                         .changeisDarkState(value);
                     saveAll.put("islightmode", value);
+                    BlocProvider.of<ThemeCubit>(context).changeTheme(value);
                   },
                 ),
               ),

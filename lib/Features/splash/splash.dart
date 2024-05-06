@@ -5,6 +5,7 @@ import 'package:khalesi/Core/gen/assets.gen.dart';
 import 'package:khalesi/Core/utils/esay_size.dart';
 import 'package:khalesi/Features/Home/presentaties/home_main.dart';
 import 'package:khalesi/Features/Settings/presentation/bloc/cubit/settings_cubit.dart';
+import 'package:khalesi/Features/Settings/presentation/bloc/theme-cubit/theme_cubit.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -17,6 +18,8 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 2000), () {
+      BlocProvider.of<ThemeCubit>(context).initState(context);
+
       BlocProvider.of<SettingsCubit>(context).initStateForSetting(context);
       Navigator.pushReplacementNamed(context, MyHomePage.rn);
       _fire();

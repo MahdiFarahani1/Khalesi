@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:khalesi/Config/setup.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
 
 import 'package:khalesi/Core/utils/esay_size.dart';
@@ -24,6 +25,8 @@ class NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var checkTheme = saveAll.get("islightmode") ??
+        MediaQuery.platformBrightnessOf(context) == Brightness.light;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -41,10 +44,10 @@ class NewsItem extends StatelessWidget {
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade600,
+                color: Theme.of(context).shadowColor,
                 spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(0, 5),
+                blurRadius: checkTheme ? 5 : 1,
+                offset: checkTheme ? const Offset(0, 5) : const Offset(0, 1),
               ),
               // BoxShadow(
               //   color: Colors.grey.shade300,
@@ -52,7 +55,7 @@ class NewsItem extends StatelessWidget {
               // )
             ],
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey.shade200),
+            color: Theme.of(context).primaryColor),
         width: EsaySize.width(context),
         height: EsaySize.height(context) / 7.2,
         child: Stack(
@@ -88,8 +91,9 @@ class NewsItem extends StatelessWidget {
                 child: Text(
                   title,
                   maxLines: 3,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
+                    color: Theme.of(context).highlightColor,
                   ),
                 ),
               ),

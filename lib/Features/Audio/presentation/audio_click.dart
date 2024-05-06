@@ -140,19 +140,21 @@ class _AudioClickState extends State<AudioClick> {
                   ),
                   EsaySize.gap(175),
                   Container(
-                      margin: const EdgeInsets.all(8),
-                      alignment: Alignment.centerLeft,
-                      width: EsaySize.width(context),
-                      height: 40,
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.arrow_forward,
-                            size: 32,
-                            color: Colors.black,
-                          )))
+                    margin: const EdgeInsets.all(8),
+                    alignment: Alignment.centerLeft,
+                    width: EsaySize.width(context),
+                    height: 40,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_forward,
+                        size: 32,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ],
               );
             },

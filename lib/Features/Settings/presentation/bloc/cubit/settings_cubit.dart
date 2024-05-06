@@ -10,7 +10,8 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   initStateForSetting(BuildContext context) async {
     var fontsize = await saveAll.get("fontsize") ?? 17.0;
-    var islightmode = await saveAll.get("islightmode") ?? true;
+    var islightmode = await saveAll.get("islightmode") ??
+        MediaQuery.platformBrightnessOf(context) == Brightness.light;
     var notif = await saveAll.get("notif") ?? true;
 
     var fontFamily = await saveAll.get("fontFamily") ?? 1;

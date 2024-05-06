@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:khalesi/Config/app-routes.dart';
 import 'package:khalesi/Config/firebase.dart';
 import 'package:khalesi/Config/setup.dart';
+import 'package:khalesi/Config/theme/theme.dart';
 import 'package:khalesi/Features/Audio/presentation/bloc/audio/audio_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/cubit/content_cubit.dart';
 import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:khalesi/Features/Home/presentaties/bloc/slider/slider_cubit.dart
 import 'package:khalesi/Features/Save/presentation/bloc/save_news_cubit.dart';
 import 'package:khalesi/Features/Search/presententaion/Search-main/search_cubit.dart';
 import 'package:khalesi/Features/Settings/presentation/bloc/cubit/settings_cubit.dart';
+import 'package:khalesi/Features/Settings/presentation/bloc/theme-cubit/theme_cubit.dart';
 import 'package:khalesi/Features/splash/splash.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -61,19 +63,35 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SettingsCubit(),
         ),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        ),
       ],
-      child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, state) {
-          return MaterialApp(
-            navigatorKey: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            initialRoute: "/",
-            routes: RoutesApp.routes,
-            theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                useMaterial3: true,
-                fontFamily: state.fontFamily),
-            home: const Splash(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, stateTheme) {
+          return BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, state) {
+              return MaterialApp(
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+                initialRoute: "/",
+                routes: RoutesApp.routes,
+                theme: ThemeApp.darkThemeData(
+                    shadowcolor: stateTheme.shadowColor,
+                    fontFamily: state.fontFamily,
+                    background: stateTheme.background,
+                    item: stateTheme.item,
+                    reverceColor: stateTheme.reverceColor),
+                darkTheme: ThemeApp.darkThemeData(
+                    shadowcolor: stateTheme.shadowColor,
+                    fontFamily: state.fontFamily,
+                    background: stateTheme.background,
+                    item: stateTheme.item,
+                    reverceColor: stateTheme.reverceColor),
+                themeMode: ThemeMode.system,
+                home: const Splash(),
+              );
+            },
           );
         },
       ),
