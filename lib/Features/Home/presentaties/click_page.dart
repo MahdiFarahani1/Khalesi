@@ -86,13 +86,11 @@ class _ClickPageState extends State<ClickPage> {
                   children: [
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(60)),
+                          bottomRight: Radius.circular(12),
+                          bottomLeft: Radius.circular(12)),
                       child: CachedNetworkImage(
                         imageUrl:
                             "${ConstLink.imgBasehigh}${data.post![0].img}",
-                        fit: BoxFit.cover,
-                        width: EsaySize.width(context),
-                        height: EsaySize.height(context) / 3.5,
                         errorWidget: (context, url, error) {
                           return const Center(
                             child: Icon(Icons.error),
