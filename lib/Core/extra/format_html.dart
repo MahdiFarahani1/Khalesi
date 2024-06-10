@@ -1,11 +1,11 @@
-import 'package:html/parser.dart';
+// import 'package:html/parser.dart';
 
-class FormatHtml {
-  static String parseHtmlString(String htmlString) {
-    final document = parse(htmlString);
-    final String parsedString =
-        parse(document.body?.text).documentElement!.text;
+// class FormatHtml {
+//   static String parseHtmlString(String htmlString) {
+//     final document = parse(htmlString);
+//     final String parsedString =
+//         parse(document.body?.text).documentElement!.text;
 
-    return parsedString;
-  }
-}
+//     return parsedString;
+//   }
+// }

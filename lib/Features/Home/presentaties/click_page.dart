@@ -1,8 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:khalesi/Config/setup.dart';
 import 'package:khalesi/Core/const/const_Color.dart';
@@ -17,10 +14,9 @@ import 'package:khalesi/Features/Home/presentaties/bloc/fetchContentApi/model/co
 import 'package:khalesi/Features/Home/presentaties/bloc/home_main/home_main_cubit.dart';
 import 'package:khalesi/Features/Save/data/dataBase/model_database.dart';
 import 'package:khalesi/Features/Save/presentation/bloc/save_news_cubit.dart';
-import 'package:khalesi/Features/Settings/presentation/bloc/cubit/settings_cubit.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-// ignore: must_be_immutable
 class ClickPage extends StatefulWidget {
   final int id;
   final bool isSaveMode;
@@ -37,7 +33,12 @@ class ClickPage extends StatefulWidget {
 
 class _ClickPageState extends State<ClickPage> {
   bool iconSelect = false;
+  String aliveCon = "";
   final TextEditingController textEditingController = TextEditingController();
+  final controllerWeb = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted);
+
+  double fontSize = 16.0;
 
   @override
   void initState() {
@@ -56,6 +57,12 @@ class _ClickPageState extends State<ClickPage> {
   void dispose() {
     textEditingController.dispose();
     super.dispose();
+  }
+
+  void _changeFontSize(double change) {
+    fontSize += change;
+
+    setState(() {});
   }
 
   @override
@@ -78,56 +85,84 @@ class _ClickPageState extends State<ClickPage> {
             }
             if (state.status is ClickComplete) {
               var data = state.data as ContentModel;
+              var date = FormatData.result(data.post![0].dateTime!);
+
               String content = data.post![0].content!;
 
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(12),
-                          bottomLeft: Radius.circular(12)),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "${ConstLink.imgBasehigh}${data.post![0].img}",
-                        errorWidget: (context, url, error) {
-                          return const Center(
-                            child: Icon(Icons.error),
-                          );
-                        },
-                        placeholder: (context, url) {
-                          return Center(
-                            child: CostumLoading.fadingCircle(context),
-                          );
-                        },
-                      ),
+              return Column(
+                children: [
+                  titleUi(
+                    categoryTitle: data.post![0].categoryTitle!,
+                    id: data.post![0].id!,
+                    title: data.post![0].title!,
+                    time: data.post![0].dateTime!,
+                    img: "${ConstLink.imgBasehigh}${data.post![0].img}",
+                  ),
+                  Expanded(
+                    child: WebViewWidget(
+                      controller: controllerWeb
+                        ..loadHtmlString(
+                          '''
+                                <html>
+                                  <head>
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+                                    <style>
+                                      body { text-align: justify;
+                                      padding: 10px !important;
+                                         }
+         img {
+      width: 100%;
+      height: 200px;
+
+    }
+ 
+       
+                                      iframe{
+  width: 100%;
+            height: 200px;
+
+                                      }
+                                      span{
+                                                                             
+ font-size: ${fontSize}px !important;
+                                      }
+                                      #headerImage{
+    width: 100%;
+  height: auto !important;
+        border-radius: 8px;
+
+
+                                      }
+                                      #dateNews{
+                                        
+                          color: grey;
+                                      }
+                                    </style>
+                                  </head>
+                                  <body dir ="rtl">
+                                  <img id="headerImage" src="${ConstLink.imgBasehigh}${data.post![0].img}" alt=""><br><br>
+                                  <span id="dateNews">$date  __  ${data.post![0].categoryTitle!} </span>
+                                    $content
+
+                                    <script>
+                                    
+                                    var images = document.getElementsByTagName('img');
+for (var i = 0; i < images.length; ++i) {
+  var img = images[i];
+  var a = document.createElement('a');
+  a.href = img.src;
+  img.parentNode.replaceChild(a, img);
+  a.appendChild(img);
+}
+                                    </script>
+                                  </body>
+                                </html>
+                              ''',
+                        ),
                     ),
-                    titleUi(
-                      categoryTitle: data.post![0].categoryTitle!,
-                      id: data.post![0].id!,
-                      title: data.post![0].title!,
-                      time: data.post![0].dateTime!,
-                      img: "${ConstLink.imgBasehigh}${data.post![0].img}",
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      child: BlocBuilder<SettingsCubit, SettingsState>(
-                        builder: (context, state) {
-                          return HtmlWidget(
-                            '''
-                                                <div style="text-align: justify;">
-                                                $content
-                                                                    </div>
-                                                                    ''',
-                            textStyle: TextStyle(fontSize: state.fontSize),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               );
             }
             return const SizedBox.shrink();
@@ -168,7 +203,7 @@ class _ClickPageState extends State<ClickPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        BlocProvider.of<SettingsCubit>(context).plusFont();
+                        _changeFontSize(2.0);
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -187,7 +222,7 @@ class _ClickPageState extends State<ClickPage> {
                     EsaySize.gap(8),
                     GestureDetector(
                       onTap: () {
-                        BlocProvider.of<SettingsCubit>(context).nagitivFont();
+                        _changeFontSize(-2.0);
                       },
                       child: Container(
                         width: 32,
@@ -299,55 +334,6 @@ class _ClickPageState extends State<ClickPage> {
                           );
                         });
                       },
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      maxLines: 3,
-                      title,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                    ),
-                    EsaySize.gap(8),
-                    Container(
-                      width: 140,
-                      height: 1,
-                      color: const Color.fromRGBO(142, 201, 51, 1),
-                    ),
-                    EsaySize.gap(8),
-                    Row(
-                      children: [
-                        const Text(
-                          "الاخبار",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        EsaySize.gap(6),
-                        const Text(
-                          "__",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        EsaySize.gap(6),
-                        Text(
-                          FormatData.result(time),
-                          style:
-                              const TextStyle(fontSize: 12, color: Colors.grey),
-                        )
-                      ],
                     )
                   ],
                 ),
